@@ -1,13 +1,8 @@
 const mongoose = require("mongoose");
 
 const CompanySchema = new mongoose.Schema(
-{
+  {
     name: {
-      type: String,
-      unique: true,
-    },
-
-    date: {
       type: String,
       unique: true,
     },
@@ -19,9 +14,14 @@ const CompanySchema = new mongoose.Schema(
           ref: "Student",
         },
 
+        date: {
+          type: String,
+          required:true,
+        },
+
         result: {
           type: String,
-          enum: ["Selected", "Not Selected", "On Hold", "Interview Pending"],
+          enum: ["Selected", "Not Selected", "On Hold", "Pending"],
         },
       },
     ],
@@ -31,6 +31,6 @@ const CompanySchema = new mongoose.Schema(
   }
 );
 
-const Company = mongoose.model("Student", CompanySchema);
+const Company = mongoose.model("Company", CompanySchema);
 
 module.exports = Company;

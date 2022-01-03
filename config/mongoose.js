@@ -1,14 +1,17 @@
-const mongoose = require('mongoose');
+require("dotenv").config();
+const mongoose = require("mongoose");
 
-mongoose.connect('mongodb://localhost/Placement_Cell_Tracker');
+mongoose.connect(process.env.DB_CONNECT);
 
 const db = mongoose.connection;
 
-db.on('error',console.error.bind(console,"Error connecting to MongoDB ......"));
+db.on(
+  "error",
+  console.error.bind(console, "Error connecting to MongoDB ......")
+);
 
-db.once('open',function(){
-    console.log('Connected to Database :: Mongodb')
-})
-
+db.once("open", function () {
+  console.log("Connected to Database :: Mongodb");
+});
 
 module.exports = db;

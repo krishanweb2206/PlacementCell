@@ -1,5 +1,6 @@
 
 const User = require("../models/user");
+const Student = require("../models/student");
 
 module.exports.home = async function(req,resp){
 
@@ -7,7 +8,9 @@ module.exports.home = async function(req,resp){
       return resp.redirect("/users/login");
     }
 
-    return resp.render("home");
+    let students = await Student.find({});
+
+    return resp.render("home",{students});
 }
 
 module.exports.login = function (req, resp) {
