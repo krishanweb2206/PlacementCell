@@ -1,7 +1,7 @@
 const express = require("express");
 const port = process.env.PORT || 8990;
 const app = express();
-
+require("dotenv").config();
 const db = require("./config/mongoose");
 
 //Use for session
