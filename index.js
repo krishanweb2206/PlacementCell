@@ -20,7 +20,7 @@ app.set("views", "./views");
 app.use(
   session({
     name: "PlacementCellTracker",
-    secret: process.env.SECRET_KEY,
+    secret: process.env.SCERET_KEY,
     saveUninitialized: false,
     resave: false,
     cookie: {
