@@ -2,6 +2,7 @@ const express = require("express");
 const port = process.env.PORT || 8990;
 const app = express();
 require("dotenv").config();
+const cors = require("cors");
 const db = require("./config/mongoose");
 
 //Use for session
@@ -11,6 +12,7 @@ const passportLocal = require("./config/passport-local-strategy");
 const MongoStore = require("connect-mongo");
 
 app.use(express.urlencoded({ extended: true }));
+app.use(cors());
 
 //use ejs template
 app.set("view engine", "ejs");
