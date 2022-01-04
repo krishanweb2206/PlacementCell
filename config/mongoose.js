@@ -1,6 +1,6 @@
-
-const mongoose = require('mongoose');
-const URI ="mongodb+srv://Kdatabase:Kdatabase@placement-cell-tracker.wl45o.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+require("dotenv").config();
+const mongoose = require("mongoose");
+const URI = process.env.MONGODB_URI;
 
 const connectDB = async () => {
   await mongoose.connect(URI, {
@@ -9,7 +9,5 @@ const connectDB = async () => {
   });
   console.log("Connected to DataBase :: MongoDB");
 };
-
-
 
 module.exports = connectDB;

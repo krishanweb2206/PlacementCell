@@ -23,7 +23,7 @@ app.set("views", "./views");
 app.use(
   session({
     name: "PlacementCellTracker",
-    secret: "blahblahblah",
+    secret: process.env.SCERET_KEY,
     saveUninitialized: false,
     resave: false,
     cookie: {
@@ -31,7 +31,7 @@ app.use(
     },
     store: MongoStore.create(
       {
-        mongoUrl: "mongodb+srv://Kdatabase:Kdatabase@placement-cell-tracker.wl45o.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
+        mongoUrl: process.env.MONGODB_URI,
         autoRemove: "disabled",
         mongooseConnection: db,
         collectionName: "sessions",
