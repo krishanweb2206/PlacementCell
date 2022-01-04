@@ -6,11 +6,19 @@ const mongoose = require("mongoose");
 const URI = process.env.MONGODB_URI;
 
 const connectDB = async () => {
-  await mongoose.connect(URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  });
-  console.log("Connected to DataBase :: MongoDB");
+
+  try{
+      
+    await mongoose.connect(URI, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+      });
+      console.log("Connected to DataBase :: MongoDB");
+  }
+  catch(error){
+    console.log(`Error in connecting with Mongodb: ${error}`);
+  }
 };
+
 
 module.exports = connectDB;
