@@ -13,11 +13,13 @@ passport.use( new LocalStratgey(
         User.findOne({email:email},function(error,user){
 
             if(error){
-                console.log('Error comes in finding user inside the passport');
+                 req.flash("error", err);
                 return done(error);
             }
 
             if(!user || user.password != password){
+
+                req.flash("error", "Invalid the user/password");
                 console.log('Invalid Username/password');
                 return done(null,false);
             }

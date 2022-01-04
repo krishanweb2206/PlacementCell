@@ -12,7 +12,7 @@ module.exports.companyhome =async function(req,resp){
 
       let studentlist = await Student.find({});
       
-
+      req.flash("success", "COMPANY PORTAL");
        return resp.render("company",{studentlist});
 
      } catch (error) {
@@ -100,6 +100,7 @@ module.exports.scheduleInterview = async function(req,resp){
         studnt.interviews.push(studentinterview);
         studnt.save();
     }
+    req.flash("success", "HURRAY INTERVIEW SCHEDULE");
       return resp.redirect('/company/')
     } catch (error) {
       console.log(`Error during submit the sigup form:  ${error}`);
@@ -148,7 +149,7 @@ module.exports.updateRecords = async function(req,resp){
         }
       }
     }
-
+     req.flash("success", "STAUS CHANGES");
     return resp.redirect('back');
   } catch (error) {
     console.log(`Error during submit the sigup form:  ${error}`);

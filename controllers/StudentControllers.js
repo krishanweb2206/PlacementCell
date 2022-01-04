@@ -52,11 +52,12 @@ module.exports.createStudent = async function(req,resp){
           console.log("error in creating new student");
           return resp.redirect("back");
         }
-
+        req.flash("success", "Create Successfully");
         return resp.redirect("/");
 
       }else{
-           return resp.redirect("back");
+         req.flash("error", "E-Mail ID Already present");
+        return resp.redirect("back");
       }
     } catch (error) {
       console.log(`Error during submit the sigup form:  ${error}`);
@@ -123,7 +124,7 @@ module.exports.updtedone = async function(req,resp){
         });
 
         await IsStudent.save();
-
+        req.flash("success", "Successfully Updated");
         return resp.redirect("/");
 
       } else {
@@ -169,9 +170,11 @@ module.exports.deletedata = async function(req,resp){
           await Student.findByIdAndDelete(req.params.id);
         }
     }
+    req.flash("success", "Deleted Successfully");
     return resp.redirect('/');
 
   } catch (error) {
+    
     console.log(`Error during submit the sigup form:  ${error}`);
     resp.redirect("back");
   }
