@@ -1,9 +1,9 @@
 const express = require("express");
 const port = process.env.PORT || 8990;
-const app = express();
-
-const cors = require("cors");
 const db = require("./config/mongoose");
+const app = express();
+db();
+const cors = require("cors");
 
 //Use for session
 const session = require("express-session");
@@ -30,7 +30,7 @@ app.use(
     },
     store: MongoStore.create(
       {
-        mongoUrl: "mongodb://localhost/Placement_Cell_Tracker",
+        mongoUrl: "mongodb+srv://Kdatabase:Kdatabase@placement-cell-tracker.wl45o.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
         autoRemove: "disabled",
         mongooseConnection: db,
         collectionName: "sessions",

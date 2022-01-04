@@ -1,16 +1,15 @@
 
 const mongoose = require('mongoose');
-const uri = process.env.MONGODB_URI || 'mongodb://localhost/placement-cell-tracker';
+const URI ="mongodb+srv://Kdatabase:Kdatabase@placement-cell-tracker.wl45o.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 
-mongoose.connect(uri);
-
-const db = mongoose.connection;
-
-db.on('error',console.error.bind(console,"Error connecting to MongoDB ......"));
-
-db.once('open',function(){
-    console.log('Connected to Database :: Mongodb')
-})
+const connectDB = async () => {
+  await mongoose.connect(URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
+  console.log("Connected to DataBase :: MongoDB");
+};
 
 
-module.exports = db;
+
+module.exports = connectDB;
