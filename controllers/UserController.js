@@ -1,7 +1,9 @@
 
+// IMPORTING THE ALL DATABASE COLLECTIONS
 const User = require("../models/user");
 const Student = require("../models/student");
 
+// AFTER THE LOGIN PAGE
 module.exports.home = async function(req,resp){
 
     if (!req.isAuthenticated()) {
@@ -9,10 +11,12 @@ module.exports.home = async function(req,resp){
     }
 
     let students = await Student.find({});
+   
 
     return resp.render("home",{students});
 }
 
+// SIGN / LOGIN
 module.exports.login = function (req, resp) {
 
   if (!req.isAuthenticated()) {
@@ -23,7 +27,7 @@ module.exports.login = function (req, resp) {
 };
 
 
-
+// SIGN UP FORM
 module.exports.signup = function (req, resp) {
 
   if (!req.isAuthenticated()) {
@@ -33,6 +37,7 @@ module.exports.signup = function (req, resp) {
   return resp.redirect("/");
 };
 
+// CREATE A USER FROM THE SIGNUP DATA
 module.exports.CreateUser = async function (req, resp) {
   try {
     if (req.body.password != req.body.confirmpassword) {
@@ -54,7 +59,11 @@ module.exports.CreateUser = async function (req, resp) {
         console.log("error in creating new user");
         return resp.redirect("back");
       }
+
+      console.log("Successfully create the user");
+
       return resp.redirect("/users/login");
+      
     } else {
       req.flash("error", "E-Mail ID Already present");
       return resp.redirect("back");
@@ -65,12 +74,13 @@ module.exports.CreateUser = async function (req, resp) {
   }
 };
 
-
+// CREATE A SESSION 
 module.exports.CreateSession = function (req, resp) {
   req.flash("success", "Yayy !!! Logged In Successfully");
   return resp.redirect("/");
 };
 
+// SIGNOUT
 module.exports.signout = function (req, res) {
   req.flash("success", "Ooops !!! Logged Out Successfully");
   req.logout();

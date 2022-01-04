@@ -1,7 +1,8 @@
-
+// IMPORTING THE FS MODULE AND STUDENT COLLECTION
 const Student = require("../models/student");
 const fs = require('fs');
 
+// DOWNLOAD THE FILE AND GENERATE THE REPORTS
 module.exports.downloadfile = async function(req,resp){
 
     try{
@@ -66,13 +67,16 @@ module.exports.downloadfile = async function(req,resp){
               console.log(err);
               return resp.redirect("back");
             }
+
             req.flash("success", "DATA IS DOWNLAODED");
+            console.log("Successfully reports generated");
+
             return resp.download("Reports/Studentdata.csv");
           }
         );
 
     }catch(error){
-        console.log(`Error during submit the sigup form:  ${error}`);
+        console.log(`Error during reports generated:  ${error}`);
         resp.redirect("back");
     }
     

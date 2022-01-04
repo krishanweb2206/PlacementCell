@@ -1,8 +1,10 @@
 
+// IMPORTING ALL THE DATABASE COLLECTIONS
 const User = require("../models/user");
 const Student = require("../models/student");
 const Company = require("../models/company");
 
+// CREATE STUDENT FORM 
 module.exports.createreq = async function(req,resp){
 
     try{
@@ -13,15 +15,17 @@ module.exports.createreq = async function(req,resp){
         }
         let studnt=[{}];
         
+        console.log('Adding a new Student ');
+
         return resp.render('createStudent',{studnt});
 
 
     }catch(error){
-        console.log(`Error during submit the sigup form:  ${error}`);
+        console.log(`Error during submit the create student form:  ${error}`);
         resp.redirect("back");
     }
 }
-
+// CREATE STUDENT FROM FORM DATA WITH ALL CHECKS AND SAVE IT TO DATABASE
 module.exports.createStudent = async function(req,resp){
 
     try {
@@ -53,20 +57,23 @@ module.exports.createStudent = async function(req,resp){
           return resp.redirect("back");
         }
         req.flash("success", "Create Successfully");
+        console.log('Student is added successfully');
+
         return resp.redirect("/");
 
       }else{
-         req.flash("error", "E-Mail ID Already present");
+        req.flash("error", "E-Mail ID Already present");
+        console.log('E-mail id is already in database(student)')
         return resp.redirect("back");
       }
     } catch (error) {
-      console.log(`Error during submit the sigup form:  ${error}`);
+      console.log(`Error during submit the createstudent form:  ${error}`);
       resp.redirect("back");
     }
 
 }
 
-
+// VIEW STUDENT DETAILS 
 module.exports.viewdata = async function(req,resp){
 
      try {
@@ -76,15 +83,18 @@ module.exports.viewdata = async function(req,resp){
 
        let studnt = await Student.findById(req.params.id);
 
+       console.log('view a details of students');
+
        return resp.render("viewstudent",{studnt});
        
      } catch (error) {
-       console.log(`Error during submit the sigup form:  ${error}`);
+       console.log(`Error during view the student:  ${error}`);
        resp.redirect("back");
      }
 
 }
 
+// UPDATE FORM OPEN FOR THE RECORDS FOR STUDENT TO BE UPDATED NOT EMAIL
 module.exports.updatereq = async function(req,resp){
 
     try {
@@ -95,13 +105,16 @@ module.exports.updatereq = async function(req,resp){
 
       let studnt = await Student.findById(req.params.id);
       
+      console.log('Going for some modification in students details');
+
       return resp.render("editStudent", { studnt });
     } catch (error) {
-      console.log(`Error during submit the sigup form:  ${error}`);
+      console.log(`Error during updating the student form:  ${error}`);
       resp.redirect("back");
     }
 }
 
+// UPDATE FORM DATA GET PASSING THROUGH ALL CHECK THEN SAVE IT.
 module.exports.updtedone = async function(req,resp){
 
     try {
@@ -125,18 +138,20 @@ module.exports.updtedone = async function(req,resp){
 
         await IsStudent.save();
         req.flash("success", "Successfully Updated");
+        console.log('Students details are update successfully');
+
         return resp.redirect("/");
 
       } else {
         return resp.redirect("back");
       }
     } catch (error) {
-      console.log(`Error during submit the sigup form:  ${error}`);
+      console.log(`Error during updating the student records:  ${error}`);
       resp.redirect("back");
     }
 }
 
-
+// DELETE THE STUDENT
 module.exports.deletedata = async function(req,resp){
 
   try {
@@ -171,11 +186,13 @@ module.exports.deletedata = async function(req,resp){
         }
     }
     req.flash("success", "Deleted Successfully");
+    console.log('Student is deleted successfully');
+    
     return resp.redirect('/');
 
   } catch (error) {
     
-    console.log(`Error during submit the sigup form:  ${error}`);
+    console.log(`Error during deleting the student:  ${error}`);
     resp.redirect("back");
   }
 

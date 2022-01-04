@@ -1,3 +1,4 @@
+//require modules
 const express = require("express");
 require("dotenv").config();
 const port = process.env.PORT || 8990;
@@ -51,12 +52,14 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(passport.setAuthenticatedUser);
 
+//require for flash message
 app.use(flash());
 app.use(flashmiddleware.setFlash);
 
 //use express router
 app.use("/", require("./routes"));
 
+//listening a port
 app.listen(port, function (error) {
   if (error) {
     console.log(`Error in connecting with server: ${error}`);

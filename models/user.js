@@ -1,4 +1,6 @@
-const mongoose = require('mongoose');
+/* USER DATABSE WHICH HANDLING THE DASHBAORD CONTAIN NAME EMAIL PASSWORD */
+
+const mongoose = require("mongoose");
 
 const UserSchema = new mongoose.Schema(
   {
@@ -23,6 +25,6 @@ const UserSchema = new mongoose.Schema(
   }
 );
 
-const User = mongoose.model("User",UserSchema);
+const User = mongoose.model("User", UserSchema);
 
 module.exports = User;

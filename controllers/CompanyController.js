@@ -1,30 +1,38 @@
+// IMPORTING THE ALL THE DATABASES COLLECTIONS
 const User = require("../models/user");
 const Student = require("../models/student");
 const Company = require("../models/company");
 
-
+// HOMEPAGE FOR COMPANY PORTAL
 module.exports.companyhome =async function(req,resp){
 
      try {
-       if (!req.isAuthenticated()) {
-         return resp.redirect("/users/login");
-       }
+
+      if (!req.isAuthenticated()) {
+
+        return resp.redirect("/users/login");
+
+      }
 
       let studentlist = await Student.find({});
       
       req.flash("success", "COMPANY PORTAL");
-       return resp.render("company",{studentlist});
+      
+      return resp.render("company",{studentlist});
 
-     } catch (error) {
-       console.log(`Error during submit the sigup form:  ${error}`);
-       resp.redirect("back");
+     }catch (error) {
+
+      console.log(`Error on company homepage:  ${error}`);
+      resp.redirect("back");
+
      }
 }
 
-
+// ALLOCATE THE INTERVIEW TO STUDENTS I.E FORM IS OPEN
 module.exports.allocateInterview = async function(req,resp){
 
     try {
+
       if (!req.isAuthenticated()) {
         return resp.redirect("/users/login");
       }
@@ -42,11 +50,12 @@ module.exports.allocateInterview = async function(req,resp){
       return resp.render("allocateInterview",{students,batch_array});
 
     } catch (error) {
-      console.log(`Error during submit the sigup form:  ${error}`);
+      console.log(`Error during allocating the interview form:  ${error}`);
       resp.redirect("back");
     }
 }
 
+// INTERVIEW SCHEDULE TO STUDENT AND SUBMIT WITH DATABSE ADDED
 module.exports.scheduleInterview = async function(req,resp){
 
     try {
@@ -76,7 +85,10 @@ module.exports.scheduleInterview = async function(req,resp){
           for(let std of compny.students)
           {
             if(std.student._id == studentid){
-              console.log("Already added");
+
+              req.flash("error", "STUDENT ALREADY INTERVIEW SCHEDULED");
+              console.log("Student interview already added");
+
               return resp.redirect("back");
             }
           }
@@ -100,15 +112,19 @@ module.exports.scheduleInterview = async function(req,resp){
         studnt.interviews.push(studentinterview);
         studnt.save();
     }
+
     req.flash("success", "HURRAY INTERVIEW SCHEDULE");
-      return resp.redirect('/company/')
+    console.log('Interview schedule for this student');
+
+    return resp.redirect('/company/')
+
     } catch (error) {
-      console.log(`Error during submit the sigup form:  ${error}`);
+      console.log(`Error during scdeuling the interview:  ${error}`);
       resp.redirect("back");
     }
 }
 
-
+// STATUS CHANGES WHICH IS INTERVIEW RESULT
 module.exports.updateRecords = async function(req,resp){
 
   try {
@@ -149,10 +165,13 @@ module.exports.updateRecords = async function(req,resp){
         }
       }
     }
-     req.flash("success", "STAUS CHANGES");
+    req.flash("success", "STAUS CHANGES");
+    console.log('Interview status get changed');
+
     return resp.redirect('back');
+
   } catch (error) {
-    console.log(`Error during submit the sigup form:  ${error}`);
+    console.log(`Error during changing the interview status:  ${error}`);
     resp.redirect("back");
   }
 
