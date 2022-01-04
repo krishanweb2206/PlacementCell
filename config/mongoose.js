@@ -2,7 +2,7 @@
 const mongoose = require('mongoose');
 const uri = process.env.MONGODB_URI || 'mongodb://localhost/placement-cell-tracker';
 
-mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(uri);
 
 const db = mongoose.connection;
 
