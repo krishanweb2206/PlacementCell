@@ -5,33 +5,31 @@ const LocalStratgey = require('passport-local').Strategy;
 
 const User = require('../models/user');
 
-passport.use( new LocalStratgey(
+passport.use(
+  new LocalStratgey(
     {
-        usernameField:"email"
+      usernameField: "email",
+      passReqToCallback: true,
     },
-    function(email,password,done){
-        
-        //find a user and establish identity
-        User.findOne({email:email},function(error,user){
+    function (req,email, password, done) {
+      //find a user and establish identity
+      User.findOne({ email: email }, function (error, user) {
+        if (error) {
+          req.flash("error", err);
+          return done(error);
+        }
 
-            if(error){
-                 req.flash("error", err);
-                return done(error);
-            }
+        if (!user || user.password != password) {
+          req.flash("error", "Invalid the user/password");
+          console.log("Invalid Username/password");
+          return done(null, false);
+        }
 
-            if(!user || user.password != password){
-
-                req.flash("error", "Invalid the user/password");
-                console.log('Invalid Username/password');
-                return done(null,false);
-            }
-
-            return done(null,user);
-
-        })
-    }   
-    
-));
+        return done(null, user);
+      });
+    }
+  )
+);
 
 //serializing the user to decide the which key is kept in the cookies
 passport.serializeUser(function(user,done){
